@@ -1,0 +1,86 @@
+{% extends 'departamentos/index.html' %}
+
+{% block titulo %} <title>Departamentos Médicos</title> {% endblock %}
+
+{% block estilos %}
+    <style>
+        body {
+            background-color: #2f3640;
+            color: white;
+        }
+
+        .navbar-custom {
+            background-color: #1e3799;
+        }
+
+        .nav-link {
+            color: white !important;
+        }
+
+        .nav-link:hover {
+            color: #74b9ff !important;
+        }
+
+        .table-custom {
+            background-color: #353b48;
+            color: white;
+        }
+
+        .table thead {
+            background-color: #1e3799;
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: #40739e;
+        }
+    </style>
+{% endblock %}
+
+{% block cartas %} {% endblock %}
+{% block contenido %}
+    <div class="container mt-5">
+
+        <div class="card p-4">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
+                <h2 class="fw-bold mb-0">Departamentos médicos</h2>
+            <div class="d-flex gap-2">
+                <form class="d-flex" role="search">
+                    <input type="text" name="nombre" class="form-control" placeholder="Buscar por nombre..." value="{{ request.GET.nombre }}">
+                </form>
+            <a href="{% url 'departamento_create' %}" class="btn btn-primary"> + Nuevo dpto</a>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-custom table-hover text-center align-middle">
+                <thead>
+                    <tr>
+                        <th>Nro Departamento</th>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for departamento in departamentos_list %}
+                        <tr>
+                            <td>{{ departamento.nro_departamento }}</td>
+                            <td>{{ departamento.nombre }}</td>
+                            <td>{{ departamento.email_dpto }}</td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="{% url 'departamento_detail' departamento.nro_departamento %}" class="btn btn-sm btn-info text-white"> Ver</a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="3">No hay departamentos cargados</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+{% endblock %}
